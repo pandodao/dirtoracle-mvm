@@ -7,7 +7,7 @@ RUN go mod download
 
 COPY . ./
 
-RUN make build
+RUN make build-prod
 
 FROM frolvlad/alpine-glibc:glibc-2.34
 
