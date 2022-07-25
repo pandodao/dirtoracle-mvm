@@ -11,12 +11,11 @@ type (
 	System struct {
 		Signers         []*Signer
 		SignerThreshold uint8
-
-		ClientID string
-
-		MvmProcess   string
-		MvmGroups    []string
-		MvmThreshold uint8
+		ClientID        string
+		MvmGroups       []string
+		MvmThreshold    uint8
+		Registry        string
+		Contract        string
 
 		GasAsset  string
 		GasAmount decimal.Decimal

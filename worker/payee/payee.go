@@ -3,7 +3,9 @@ package payee
 import (
 	"context"
 	"encoding/base64"
+	"encoding/hex"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/fox-one/pkg/logger"
@@ -122,17 +124,21 @@ func (w *Worker) handleSnapshot(ctx context.Context, snapshot *core.Snapshot) er
 		return nil
 	}
 
-	data, _ = p.MarshalBinary()
+	data, err = w.dumpExtra(p)
+	if err != nil {
+		log.WithError(err).Errorln("dumpExtra", p)
+		return err
+	}
 	op := &encoding.Operation{
 		Purpose: encoding.OperationPurposeGroupEvent,
-		Process: w.system.MvmProcess,
+		Process: w.system.Registry,
 		Extra:   data,
 	}
 
 	if err := w.walletz.Transfer(ctx, &core.Transfer{
 		AssetID:   w.system.GasAsset,
 		Amount:    w.system.GasAmount,
-		TraceID:   uuid.Modify(snapshot.SnapshotID, "forward-to-mvm"),
+		TraceID:   uuid.Modify(snapshot.SnapshotID, "forward-to-mvm-registry"),
 		Memo:      base64.RawURLEncoding.EncodeToString(op.Encode()),
 		Opponents: w.system.MvmGroups,
 		Threshold: w.system.MvmThreshold,
@@ -158,4 +164,19 @@ func (w *Worker) handleSnapshot(ctx context.Context, snapshot *core.Snapshot) er
 	}
 
 	return nil
+}
+
+func (w *Worker) dumpExtra(p core.PriceData) ([]byte, error) {
+	paramBts, err := p.MarshalBinary()
+	if err != nil {
+		return nil, err
+	}
+	params := "08c379a0" + hex.EncodeToString(paramBts)
+
+	extra := fmt.Sprintf("0001%s%04x%s",
+		strings.ToLower(w.system.Contract[2:]),
+		len(params)/2, params,
+	)
+
+	return hex.DecodeString(extra)
 }

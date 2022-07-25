@@ -28,7 +28,8 @@ type (
 	}
 
 	MVM struct {
-		Process   string   `json:"process"`
+		Registry  string   `json:"registry"`
+		Contract  string   `json:"contract"`
 		Groups    []string `json:"groups,omitempty"`
 		Threshold uint8    `json:"threshold,omitempty"`
 	}

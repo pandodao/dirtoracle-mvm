@@ -12,12 +12,11 @@ func provideSystem() *core.System {
 	return &core.System{
 		Signers:         cfg.Oracle.Signers,
 		SignerThreshold: cfg.Oracle.Threshold,
-
-		ClientID: cfg.Dapp.ClientID,
-
-		MvmProcess:   cfg.MVM.Process,
-		MvmGroups:    cfg.MVM.Groups,
-		MvmThreshold: cfg.MVM.Threshold,
+		ClientID:        cfg.Dapp.ClientID,
+		MvmGroups:       cfg.MVM.Groups,
+		MvmThreshold:    cfg.MVM.Threshold,
+		Registry:        cfg.MVM.Registry,
+		Contract:        cfg.MVM.Contract,
 
 		GasAsset:  cfg.Gas.Asset.String(),
 		GasAmount: cfg.Gas.Amount,
