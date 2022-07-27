@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.0 <0.9.0;
 
-import "./Ownable.sol";
+import "../Ownable.sol";
 import "./AggregatorV3Interface.sol";
 
-contract PriceStoreV3 is Ownable, AggregatorV3Interface {
+contract PriceStore is Ownable, AggregatorV3Interface {
     event AnswerUpdated(
         int256 indexed current,
         uint256 indexed roundId,

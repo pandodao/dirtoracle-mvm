@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.0 <0.9.0;
 
-import {PriceStoreV3 as PriceStore} from "./V3PriceStore.sol";
-import "./FactoryInterface.sol";
+import "./V3PriceStore.sol";
+import "../FactoryInterface.sol";
 import "./Registry.sol";
-import "./Ownable.sol";
+import "../Ownable.sol";
 
-contract FactoryV3 is Ownable, FactoryInterface {
-    Registry public registry;
+contract Factory is Ownable, FactoryInterface {
+    Registry public registry = Registry(0x3c84B6C98FBeB813e05a7A7813F0442883450B1F);
     mapping(address => PriceStore) public stores;
 
-    constructor(address _registry) {
+    function setRegistry(address _registry) public onlyOwner {
         registry = Registry(_registry);
         require(
             registry.contracts(0xc6d0c7282624429b8e0dd9d19b6592fa) !=

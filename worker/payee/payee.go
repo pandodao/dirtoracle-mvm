@@ -171,12 +171,13 @@ func (w *Worker) dumpExtra(p core.PriceData) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	params := "08c379a0" + hex.EncodeToString(paramBts)
+	params := "c5c64d4e" + hex.EncodeToString(paramBts)
 
 	extra := fmt.Sprintf("0001%s%04x%s",
 		strings.ToLower(w.system.Contract[2:]),
 		len(params)/2, params,
 	)
+	fmt.Println(extra)
 
 	return hex.DecodeString(extra)
 }
