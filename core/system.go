@@ -14,8 +14,7 @@ type (
 		ClientID        string
 		MvmGroups       []string
 		MvmThreshold    uint8
-		Registry        string
-		Contract        string
+		MvmProcess      string
 
 		GasAsset  string
 		GasAmount decimal.Decimal

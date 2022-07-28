@@ -15,8 +15,7 @@ func provideSystem() *core.System {
 		ClientID:        cfg.Dapp.ClientID,
 		MvmGroups:       cfg.MVM.Groups,
 		MvmThreshold:    cfg.MVM.Threshold,
-		Registry:        cfg.MVM.Registry,
-		Contract:        cfg.MVM.Contract,
+		MvmProcess:      cfg.MVM.Process,
 
 		GasAsset:  cfg.Gas.Asset.String(),
 		GasAmount: cfg.Gas.Amount,
