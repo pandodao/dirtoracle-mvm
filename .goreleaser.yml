@@ -1,0 +1,26 @@
+before:
+  hooks:
+    - go mod download
+
+builds:
+  - main: .
+    id: mvmdirt
+    binary: mvmdirt
+    goos:
+      - linux
+      - darwin
+    env:
+      - CGO_ENABLED=1
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}}
+
+dockers:
+  - id: mvmdirt
+    goos: linux
+    goarch: amd64
+    dockerfile: docker/Dockerfile
+    image_templates:
+    - "ghcr.io/fox-one/{{ .ProjectName }}/mvmdirt:latest"
+    - "ghcr.io/fox-one/{{ .ProjectName }}/mvmdirt:{{ .Major }}"
+    - "ghcr.io/fox-one/{{ .ProjectName }}/mvmdirt:{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/fox-one/{{ .ProjectName }}/mvmdirt:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
